@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja Exemplo com Micro Interações</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+    }
+
+    .top-banner {
+      height: 100px;
+      background-color: #242424;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+	  color:#dadada;
+    }
+
+    header {
+      background-color: #57479C;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+	
+    .logo {
+      font-weight: bold;
+      font-size: 20px;
+    }
+	
+	.nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+	  justify-items:center;
+      position: relative;
+    }
+
+	.nav-links a {
+      color: white;
+      text-decoration: none;
+      position: relative;
+	  padding: 20px 10px;
+    }
+	
+	.nav-links a::after {
+	  content: "";
+	  position: absolute;
+	  width: 0;
+	  height: 2px;
+	  bottom: 0px;
+	  left: 0;
+	  background-color: #fff;
+	}
+	
+	.nav-links a.active::after {
+	  content: "";
+	  position: absolute;
+	  width: 100%;
+	  height: 2px;
+	  bottom: 0px;
+	  left: 0;
+	  background-color: #fff;
+	}
+
+	.nav-links a:hover::after {
+	  width: 100%;
+	}
+	
+	.nav-links a:active {
+	  transition: all 0.2s;
+	   background-color: #8F7ED7;
+	   color: #fffff:
+	}
+	
+	.dropdown-wrapper{
+		display:flex;
+	}
+	
+	.dropdown {
+      opacity: 0;
+      visibility: hidden;
+	  transform: translateY(20px);
+      position: absolute;
+      top: 58px;
+      left: 82px;
+      background-color: white;
+      color: black;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 0 0 4px 4px;
+      padding: 10px;
+      z-index: 1001;
+      min-width: 150px;
+    }
+
+    .dropdown a {
+      display: block;
+      padding:  10px;
+      color: black;
+      text-decoration: none;
+    }
+	
+	.nav-links .dropdown a::after {
+	  background-color: #8F7ED7;
+	}
+	
+
+    .dropdown-wrapper:hover .dropdown {
+	  opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    @keyframes animateBannerTextBg {
+	  0% {
+		background-color: rgba(87, 71, 156, 0.2);
+	  }
+	  50% {
+		background-color: rgba(87, 71, 156, 1); /* tom roxo da marca */
+	  }
+	  100% {
+		background-color: rgba(87, 71, 156, 0.2);
+	  }
+	}
+
+	@keyframes pulseText {
+	  0% {
+		transform: scale(1);
+		opacity: 1;
+	  }
+	  50% {
+		transform: scale(1.05);
+		opacity: 0.9;
+	  }
+	  100% {
+		transform: scale(1);
+		opacity: 1;
+	  }
+	}
+
+
+	.banner {
+	  position: relative;
+	  height: 400px;
+	  overflow: hidden;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
+	
+	.bg {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background-size: cover;
+	  background-position: center;
+	}
+	
+	.img1 {
+	  background-image: url('https://picsum.photos/id/6/1200/400?blur=8');
+	}
+	
+	/* Container dos textos */
+	.banner-text {
+	  position: relative;
+	  z-index: 2;
+	  color: white;
+	  width:100%;
+	  height:100%;
+	}
+
+	/* Todas começam invisíveis */
+	.msg {
+	width:400px;
+	height: auto;
+	position:absolute;
+	top:30%;
+	  right:40%;
+	  opacity: 0;
+	  font-size: 60px;
+	  font-weight: bold;
+	  text-align: center;
+		color: #fff;
+		text-shadow: 3px 3px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5);
+		color: #fff;
+	}
+
+	/* Animações com tempo total de 40s */
+	@keyframes fadeInOut {
+	  0%, 9%, 35%, 100% {
+		opacity: 0;
+	  }
+	  10%, 34% {
+		opacity: 1;
+	  }
+	}
+
+	@keyframes slideUpDown {
+	  0%, 44%, 70%, 100% {
+		opacity: 0;
+	  }
+	  45%, 69% {
+		opacity: 1;
+	  }
+	}
+
+	@keyframes zoomInOut {
+	  0%, 79%, 100% {
+		opacity: 0;
+	  }
+	  80%, 99% {
+		opacity: 1;
+	  }
+	}
+
+	/* Cada uma com delay para aparecer em sequência */
+	.msg1 {
+	  animation: fadeInOut 10s linear infinite;
+	}
+
+	.msg2 {
+	  animation: slideUpDown 10s linear infinite;
+	}
+
+	.msg3 {
+	  animation: zoomInOut 10s linear infinite;
+	}
+
+
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 40px auto;
+	  margin-top: -30px;
+      padding: 0 20px;
+    }
+
+    .product {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+	
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 4px;
+    }
+	
+	.product .title {
+		position:absolute;
+		bottom:24px;
+		left:20px;
+      width: calc(100% - 60px);
+      height:auto;
+	  color:#fff;
+	  padding: 10px;
+	  background: rgba(0,0,0,0.5);
+	  border-radius: 0 0 6px 6px;
+	  display:flex;
+	  justify-content: space-between;
+	  
+    }
+	
+	.product .title p{
+		padding:0;
+		margin:0;
+	}
+	
+	.product .title p.price{
+		font-weight:bold;
+	}
+	
+	.product:hover .title {
+	  transform: translateX(0%) translateY(-56px);
+	  border-radius: 0;
+	}
+
+
+	.buy-button {
+	  position: absolute;
+	  bottom: 20px;
+	  left: 20px;
+	  width: calc(100% - 40px);
+	  height: 60px;
+	  transform: translateX(0%) translateY(100%);
+	  opacity: 0;
+	  font-size:20px;
+	  background: linear-gradient(270deg, #57479C, #6d5ee6, #57479C);
+	  background-size: 600% 600%;
+	  color: white;
+	  border: none;
+	  padding: 10px;
+	  border-radius: 0 0 8px 8px;
+	  cursor: pointer;
+	}
+
+	.product:hover .buy-button {
+	  transform: translateX(0%) translateY(0);
+	  opacity: 1;
+	}
+
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-banner">Propaganda aqui</div>
+
+  <header id="header">
+  <nav>
+      <div class="logo">MB Store</div>
+      <div class="nav-links">
+        <a href="#" class="active">Home</a>
+        <div class="dropdown-wrapper">
+          <a href="#">Produtos</a>
+          <div class="dropdown">
+            <a href="#">Linha 1</a>
+            <a href="#">Linha 2</a>
+            <a href="#">Linha 3</a>
+          </div>
+        </div>
+        <a href="#">Contato</a>
+      </div>
+    </nav>
+  </header>
+
+	<section class="banner">
+	  <div class="bg img1"></div>
+	  <div class="banner-text">
+		<div class="msg msg1">Promoções da Semana!</div>
+		<div class="msg msg2">Aproveite os descontos</div>
+		<div class="msg msg3">Clique aqui</div>
+	  </div>
+	</section>
+
+
+
+
+  <section class="products">
+    <!-- Linha 1 -->
+    <div class="product">
+	  <div class="title"><p>Produto 1</p> <p class="price">$ 49</p></div>
+      <img src="https://picsum.photos/300/200?random=1" alt="Produto 1">
+      <button class="buy-button">Comprar</button>
+    </div>
+    <div class="product">
+	  <div class="title"><p>Produto 2 </p> <p class="price">$ 60</p></div>
+      <img src="https://picsum.photos/300/200?random=2" alt="Produto 2">
+      <button class="buy-button">Comprar</button>
+    </div>
+    <div class="product">
+		<div class="title"><p>Produto 3 </p> <p class="price">$ 100</p></div>
+      <img src="https://picsum.photos/300/200?random=3" alt="Produto 3">
+      <button class="buy-button">Comprar</button>
+    </div>
+
+    <!-- Linha 2 -->
+    <div class="product">
+	  <div class="title"><p>Produto 4 </p> <p class="price">$ 30</p></div>
+      <img src="https://picsum.photos/300/200?random=4" alt="Produto 4">
+      <button class="buy-button">Comprar</button>
+    </div>
+    <div class="product">
+	  <div class="title"><p>Produto 5 </p> <p class="price">$ 400</p></div>
+      <img src="https://picsum.photos/300/200?random=5" alt="Produto 5">
+      <button class="buy-button">Comprar</button>
+    </div>
+    <div class="product">
+	  <div class="title"><p>Produto 6 </p> <p class="price">$ 90</p></div>
+      <img src="https://picsum.photos/300/200?random=6" alt="Produto 6">
+      <button class="buy-button">Comprar</button>
+    </div>
+	
+	 <!-- Linha 3 -->
+    <div class="product">
+	<div class="title"><p>Produto 7 </p> <p class="price">$ 46</p></div>
+      <img src="https://picsum.photos/300/200?random=7" alt="Produto 7">
+      <button class="buy-button">Comprar</button>
+    </div>
+    <div class="product">
+		<div class="title"><p>Produto 8 </p class="price"> <p>$ 120</p></div>
+      <img src="https://picsum.photos/300/200?random=8" alt="Produto 8">
+      <button class="buy-button">Comprar</button>
+    </div>
+    <div class="product">
+		<div class="title"><p>Produto 9 </p> <p class="price">$ 35</p></div>
+      <img src="https://picsum.photos/300/200?random=9" alt="Produto 9">
+      <button class="buy-button">Comprar</button>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 MB Store - Todos os direitos reservados
+  </footer>
+</body>
+</html>
